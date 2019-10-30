@@ -46,7 +46,8 @@ RCT_EXPORT_MODULE();
         @"value": @(sender.on),
         @"name": @"tap",
     };
-    [self.bridge.eventDispatcher sendInputEventWithName:@"topChange" body:event];
+    [self.bridge enqueueJSCall:@"RCTEventEmitter" method:@"receiveEvent" args:@[dict[@"target"], RCTNormalizeInputEventName(@"topChange"), dict] completion:NULL];
+//    [self.bridge.eventDispatcher sendInputEventWithName:@"topChange" body:event];
 }
 
 - (void)animationDidStopForCheckBox:(BEMCheckBox *)sender {
@@ -55,7 +56,8 @@ RCT_EXPORT_MODULE();
         @"value": @(sender.on),
         @"name": @"animation",
     };
-    [self.bridge.eventDispatcher sendInputEventWithName:@"topChange" body:event];
+    [self.bridge enqueueJSCall:@"RCTEventEmitter" method:@"receiveEvent" args:@[dict[@"target"], RCTNormalizeInputEventName(@"topChange"), dict] completion:NULL];
+//    [self.bridge.eventDispatcher sendInputEventWithName:@"topChange" body:event];
 }
 
 RCT_CUSTOM_VIEW_PROPERTY(value, BOOL, BEMCheckBox) {
