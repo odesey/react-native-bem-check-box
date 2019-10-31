@@ -2,6 +2,7 @@
 #import "RNBEMCheckBoxManager.h"
 
 #import <React/RCTBridge.h>
+#import <React/RCTViewManager.h>
 #import <React/RCTEventDispatcher.h>
 #import <React/UIView+React.h>
 #import <React/RCTConvert.h>
@@ -46,8 +47,8 @@ RCT_EXPORT_MODULE();
         @"value": @(sender.on),
         @"name": @"tap",
     };
-    //RCTComponentEvent *event = [[RCTComponentEvent alloc] initWithName:@"topChange" body:body];
-    [self.bridge.eventDispatcher sendEvent:@"topChange"];
+    [self.bridge enqueueJSCall:@"RCTEventEmitter" method:@"receiveEvent" args:@[event[@"target"], RCTNormalizeInputEventName(@"topChange"), event] completion:NULL];
+    //[self.bridge.eventDispatcher sendInputEventWithName:@"topChange" body:event];
 }
 
 - (void)animationDidStopForCheckBox:(BEMCheckBox *)sender {
@@ -56,7 +57,8 @@ RCT_EXPORT_MODULE();
         @"value": @(sender.on),
         @"name": @"animation",
     };
-    [self.bridge.eventDispatcher sendEvent:@"topChange"];
+    [self.bridge enqueueJSCall:@"RCTEventEmitter" method:@"receiveEvent" args:@[event[@"target"], RCTNormalizeInputEventName(@"topChange"), event] completion:NULL];
+    //[self.bridge.eventDispatcher sendInputEventWithName:@"topChange" body:event];
 }
 
 RCT_CUSTOM_VIEW_PROPERTY(value, BOOL, BEMCheckBox) {
